@@ -1,0 +1,3 @@
+simple-websocket-server===0.4.2
+websockets===10.3
+streamlit

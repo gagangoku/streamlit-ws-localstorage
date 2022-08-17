@@ -28,4 +28,4 @@ ret = conn.getLocalStorageVal(key='k1')
 st.write('ret: ' + ret)
 ```
 
-You can use the ```linode.liquidco.in``` websocket relay server for testing. Alternately run your websocket relay server from the code in ```ws_server.py```
+You can use the ```linode.liquidco.in``` websocket relay server for testing. Alternately run your websocket relay server from the code in ```websocket-server/ws_server.py```
