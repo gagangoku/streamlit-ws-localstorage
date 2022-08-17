@@ -72,16 +72,19 @@ class WebsocketClient:
         self.loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self.loop)
 
-    def sendCommand(self, value):
+    def sendCommand(self, value, waitForResponse=True):
         ssl_context = ssl.create_default_context()
         ssl_context.load_verify_locations(certifi.where())
 
         async def query(future):
             async with websockets.connect("wss://" + self.hostPort + "/?uid=" + self.uid, ssl=ssl_context) as ws:
                 await ws.send(value)
-                response = await ws.recv()
-                print('response: ', response)
-                future.set_result(response)
+                if waitForResponse:
+                    response = await ws.recv()
+                    print('response: ', response)
+                    future.set_result(response)
+                else:
+                    future.set_result('')
 
         future1 = asyncio.Future()
         self.loop.run_until_complete(query(future1))

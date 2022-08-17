@@ -2,4 +2,5 @@
 build/
 dist/
 streamlit_ws_localstorage.egg-info/
+__pycache__/
 
