@@ -12,8 +12,11 @@ Looking at the complexity, I thought it would be easier to write a synchronous c
 Using it is fairly simple:
 
 
-```
+```python
+import streamlit as st
 from streamlit_ws_localstorage import injectWebsocketCode, getOrCreateUID
+
+# Main call to the api, returns a communication object
 conn = injectWebsocketCode(hostPort='linode.liquidco.in', uid=getOrCreateUID())
 
 st.write('setting into localStorage')
@@ -23,7 +26,6 @@ st.write('ret: ' + ret)
 st.write('getting from localStorage')
 ret = conn.getLocalStorageVal(key='k1')
 st.write('ret: ' + ret)
-
 ```
 
 You can use the ```linode.liquidco.in``` websocket relay server for testing. Alternately run your websocket relay server from the code in ```ws_server.py```
