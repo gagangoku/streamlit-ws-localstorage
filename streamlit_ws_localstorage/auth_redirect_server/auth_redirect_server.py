@@ -21,12 +21,11 @@ class MyServer(BaseHTTPRequestHandler):
                 # Validation passed
                 code = d['code'][0]
                 state = d['state'][0]
-                closeTab = 'closeTab' in d and d['closeTab'][0].lower() == 'true'
-                logging.info('code, state, closeTab: {} {} {}'.format(code, state, str(closeTab)))
+                logging.info('code, state: {} {}'.format(code, state))
                 conn = WebsocketClient('linode.liquidco.in', state)
                 ret = conn.sendCommand(json.dumps({ 'cmd': 'process_auth_redirect', 'code': code, 'state': state }), waitForResponse=False)
                 ret = 'AUTH SUCCESS ' + ret
-                self.sendText(ret, closeTab=closeTab)
+                self.sendText(ret, closeTab=True)
             else:
                 # Validation failed
                 self.sendText('AUTH FAILED: Bad url', status=400)
