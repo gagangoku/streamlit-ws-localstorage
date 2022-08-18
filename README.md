@@ -1,6 +1,8 @@
 # streamlit-ws-localstorage
 Finally a simple synchronous way of accessing localStorage from your Streamlit app.
 
+[![Downloads](https://static.pepy.tech/personalized-badge/streamlit-ws-localstorage?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads)](https://pepy.tech/project/streamlit-ws-localstorage)
+
 # Why
 I tried using extra-streamlit-components but found it too complex, because of the way Streamlit components works.
 Since the communication between the browser and streamlit app is async, your app is run multiple times, and nested if else blocks may not work properly. A simple call to get all cookies causes the app to be run 4 times in total. And the first call to get all cookies returns an empty dictionary which needs to be handled in the code.
