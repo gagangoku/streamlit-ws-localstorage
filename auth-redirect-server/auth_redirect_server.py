@@ -21,22 +21,27 @@ class MyServer(BaseHTTPRequestHandler):
                 # Validation passed
                 code = d['code'][0]
                 state = d['state'][0]
-                logging.info('code, state: {} {}'.format(code, state))
+                closeTab = 'closeTab' in d and d['closeTab'][0].lower() == 'true'
+                logging.info('code, state, closeTab: {} {} {}'.format(code, state, str(closeTab)))
                 conn = WebsocketClient('linode.liquidco.in', state)
                 ret = conn.sendCommand(json.dumps({ 'cmd': 'process_auth_redirect', 'code': code, 'state': state }), waitForResponse=False)
-                self.sendText(ret)
+                ret = 'AUTH SUCCESS ' + ret
+                self.sendText(ret, closeTab=closeTab)
             else:
                 # Validation failed
-                self.sendText('Bad url', status=400)
+                self.sendText('AUTH FAILED: Bad url', status=400)
         except Exception:
-            self.sendText('Exception', state=502)
+            self.sendText('AUTH FAILED: Exception', status=502)
             logging.exception("Exception")
 
-    def sendText(self, text, status=200):
+    def sendText(self, text, status=200, closeTab=False):
         self.send_response(status)
         self.send_header("Content-type", "text/html")
         self.end_headers()
-        self.wfile.write(bytes("<html><head><title>Auth redirect server</title></head><body>{}</body></html>".format(text), "utf-8"))
+
+        script = '<div style="font-size: 14px; margin-top: 10px;">This tab will automatically close soon. If it doesnt, please close it manually.</div><script>setTimeout(() => window.close(), 2000);</script>' if closeTab else ''
+        html = '<html><head><title>Auth redirect server</title></head><body><div style="font-size: 20px; margin-top: 10px;">{}</div>{}</body></html>'.format(text, script)
+        self.wfile.write(bytes(html, "utf-8"))
 
 
 if __name__ == "__main__":
