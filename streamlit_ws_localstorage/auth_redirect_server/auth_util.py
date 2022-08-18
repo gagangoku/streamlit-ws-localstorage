@@ -25,7 +25,7 @@ function connect(hostPort, uid, localStorageCodeKey, reloadInSecs) {
 
         var div = document.getElementById("statusDiv");
         div.innerHTML = 'Auth code received. Reloading page in ' + reloadInSecs + ' seconds';
-        setTimeout(() => window.parent.location.reload(), reloadInSecs);
+        setTimeout(() => window.parent.location.reload(), reloadInSecs*1000);
     }
   };
 
