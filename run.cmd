@@ -5,5 +5,5 @@
 nohup ./venv/bin/python3 -u streamlit_ws_localstorage/websocket_server/ws_server.py 2>&1 > logs/ws-$(date '+%Y-%m-%dT%H:%M:%S').log &
 
 # Run auth redirect server
-nohup ./venv/bin/python3 -u streamlit_ws_localstorage/auth_redirect_server/auth_redirect_server.py 2>&1 > logs/auth-$(date '+%Y-%m-%dT%H:%M:%S').log &
+PYTHONPATH=. nohup ./venv/bin/python3 -u streamlit_ws_localstorage/auth_redirect_server/auth_redirect_server.py 2>&1 > logs/auth-$(date '+%Y-%m-%dT%H:%M:%S').log &
 
