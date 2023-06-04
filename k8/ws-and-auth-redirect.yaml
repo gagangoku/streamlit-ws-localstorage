@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ws-and-auth-redirect
-          image: gcr.io/GOOGLE_CLOUD_PROJECT/theawakedev-cloudbuild:COMMIT_SHA
+          image: gcr.io/GOOGLE_CLOUD_PROJECT/streamlit-ws-ls-cloudbuild:COMMIT_SHA
           ports:
             - containerPort: 3002
               protocol: TCP
