@@ -1,0 +1,33 @@
+# Triggered by a new commit to Github
+
+steps:
+# This step builds the container image.
+- name: "gcr.io/cloud-builders/docker"
+  id: Build
+  args: ["build", "-t", "gcr.io/$PROJECT_ID/streamlit-ws-ls-cloudbuild:$SHORT_SHA", "."]
+
+# This step pushes the image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push
+  args: ['push', 'gcr.io/$PROJECT_ID/streamlit-ws-ls-cloudbuild:$SHORT_SHA']
+
+# This step generates the new manifest
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Generate manifest
+  entrypoint: /bin/sh
+  args:
+  - '-c'
+  - |
+     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" k8/ws-and-auth-redirect.yaml | \
+     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > k8.yaml
+
+# This step deploys the new version of our container image in our Kubernetes cluster.
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Deploy
+  args: ['apply', '-f', 'k8.yaml']
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=asia-south1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-asia-south1'
+
+images:
+- 'gcr.io/$PROJECT_ID/streamlit-ws-ls-cloudbuild'
