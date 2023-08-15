@@ -2,11 +2,13 @@ import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 import logging
+import os
 
 from streamlit_ws_localstorage import WebsocketClient
 
 hostName = "0.0.0.0"
 serverPort = 8002
+wsAuthServer = os.getenv('WS_AUTH_SERVER', default='')
 
 
 # Server to handle /redirect urls that come from OAuth 2 redirects
@@ -22,7 +24,7 @@ class MyServer(BaseHTTPRequestHandler):
                 code = d['code'][0]
                 state = d['state'][0]
                 logging.info('code, state: {} {}'.format(code, state))
-                conn = WebsocketClient('linode.liquidco.in', state)
+                conn = WebsocketClient(wsAuthServer, state)
                 ret = conn.sendCommand(json.dumps({ 'cmd': 'process_auth_redirect', 'code': code, 'state': state }), waitForResponse=False)
                 ret = 'AUTH SUCCESS ' + ret
                 self.sendText(ret, closeTab=True)

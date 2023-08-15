@@ -10,7 +10,7 @@ def main():
     ssl_context.load_verify_locations(certifi.where())
 
     async def query(future):
-        async with websockets.connect("wss://linode.liquidco.in/?uid=21", ssl=ssl_context) as ws:
+        async with websockets.connect("wss://wsauthserver.supergroup.ai/?uid=21", ssl=ssl_context) as ws:
             await ws.send('{"cmd":"echo","msg":"hi4"}')
             response = await ws.recv()
             print ('response: ', response)

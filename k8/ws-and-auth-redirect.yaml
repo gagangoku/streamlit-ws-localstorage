@@ -17,6 +17,10 @@ spec:
       containers:
         - name: ws-and-auth-redirect
           image: gcr.io/GOOGLE_CLOUD_PROJECT/streamlit-ws-ls-cloudbuild:COMMIT_SHA
+          # image: gcr.io/gifted-cooler-361706/streamlit-ws-ls-cloudbuild:32d5c31
+          env:
+            - name: WS_AUTH_SERVER
+              value: wsauthserver.supergroup.ai
           ports:
             - containerPort: 3002
               protocol: TCP
@@ -50,12 +54,12 @@ metadata:
 spec:
   tls:
     - hosts:
-      - authredirect.liquidco.in
-      - linode.liquidco.in
-      secretName: secret-liquidco-20220714
+      - authredirect.supergroup.ai
+      - wsauthserver.supergroup.ai
+      secretName: secret-supergroup-20221220
   ingressClassName: nginx
   rules:
-    - host: 'authredirect.liquidco.in'
+    - host: 'authredirect.supergroup.ai'
       http:
         paths:
           - path: /
@@ -65,7 +69,7 @@ spec:
                 name: ws-and-auth-redirect
                 port:
                   number: 8002
-    - host: 'linode.liquidco.in'
+    - host: 'wsauthserver.supergroup.ai'
       http:
         paths:
           - path: /

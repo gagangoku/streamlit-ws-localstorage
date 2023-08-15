@@ -23,7 +23,7 @@ from streamlit_ws_localstorage import injectWebsocketCode
 
 # You can use my server for now, or run your own websocket server and auth redirect servers from here:
 # https://github.com/gagangoku/streamlit-ws-localstorage/tree/main/streamlit_ws_localstorage
-HOST_PORT = 'linode.liquidco.in'
+HOST_PORT = 'wsauthserver.supergroup.ai'
 
 # Main call to the api, returns a communication object
 conn = injectWebsocketCode(hostPort=HOST_PORT, uid=str(uuid.uuid1()))
@@ -37,7 +37,7 @@ ret = conn.getLocalStorageVal(key='k1')
 st.write('ret: ' + ret)
 ```
 
-You can use the ```linode.liquidco.in``` websocket relay server for testing. Alternately run your websocket relay server from the code in ```websocket-server/ws_server.py```
+You can use the ```wsauthserver.supergroup.ai``` websocket relay server for testing. Alternately run your websocket relay server from the code in ```websocket-server/ws_server.py```
 
 
 # Oauth
@@ -59,11 +59,11 @@ AUTH_CODE_KEY = '_linkedin.authCode'
 
 # You can use my server for now, or run your own websocket server and auth redirect servers from here:
 # https://github.com/gagangoku/streamlit-ws-localstorage/tree/main/streamlit_ws_localstorage
-HOST_PORT = 'linode.liquidco.in'
+HOST_PORT = 'wsauthserver.supergroup.ai'
 
 # Use this to avoid handling redirects in your app.
 # Don't forget to register this as a redirect url in your linkedin app.
-REDIRECT_URL = 'https://authredirect.liquidco.in/redirect'
+REDIRECT_URL = 'https://authredirect.supergroup.in/redirect'
 
 
 def getLinkedinOauth(uid):
@@ -144,7 +144,7 @@ def main():
 main()
 ```
 
-This shows a `Login with LinkedIn` link which opens the Linkedin auth page in a new tab, which upon success redirects to https://authredirect.liquidco.in/redirect. You can use this to avoid handling page redirects in your streamlit app.
+This shows a `Login with LinkedIn` link which opens the Linkedin auth page in a new tab, which upon success redirects to https://authredirect.supergroup.in/redirect. You can use this to avoid handling page redirects in your streamlit app.
 
 If there’s interest, I can make simple button components for Linkedin, Google, Github to simplify this even further.
 
