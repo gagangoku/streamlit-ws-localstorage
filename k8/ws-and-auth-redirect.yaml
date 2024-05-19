@@ -4,6 +4,9 @@ metadata:
   name: ws-and-auth-redirect
   labels:
     app: ws-and-auth-redirect
+  annotations:
+    keel.sh/policy: all
+    keel.sh/trigger: poll
 spec:
   replicas: 1
   selector:
@@ -16,7 +19,8 @@ spec:
     spec:
       containers:
         - name: ws-and-auth-redirect
-          image: gcr.io/GOOGLE_CLOUD_PROJECT/streamlit-ws-ls-cloudbuild:COMMIT_SHA
+          # image: gcr.io/GOOGLE_CLOUD_PROJECT/streamlit-ws-ls-cloudbuild:COMMIT_SHA
+          image: gagangoku1/ws-and-auth-redirect-k8
           # image: gcr.io/gifted-cooler-361706/streamlit-ws-ls-cloudbuild:32d5c31
           env:
             - name: WS_AUTH_SERVER
